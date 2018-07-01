@@ -60,6 +60,9 @@ func init() {
 			if info.IsDir() {
 				return
 			}
+			if strings.HasPrefix(filepath.Base(path), ".") {
+				return
+			}
 			if filepath.Ext(path) != ".json" {
 				return
 			}

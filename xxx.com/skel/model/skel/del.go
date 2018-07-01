@@ -2,15 +2,12 @@ package skel
 
 import (
 	"gopkg.in/mgo.v2"
-	"xxx.com/skel/mongo"
 )
 
+// Del 定义删除操作
 func (skel *Skel) Del() (err error) {
-	db, table := skel.Db(), skel.Table()
-	session := mongo.DBS[db]
-	sessionCopy := session.Copy()
-	defer sessionCopy.Close()
-	c := sessionCopy.DB(db).C(table)
+	c := skel.GetC()
+	defer c.Database.Session.Close()
 
 	err = c.Remove(skel)
 	if err != nil {

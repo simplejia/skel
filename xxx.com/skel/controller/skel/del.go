@@ -5,12 +5,12 @@ import (
 	"net/http"
 
 	"xxx.com/lib"
-	"xxx.com/skel/api"
 	"xxx.com/skel/service"
 
 	"github.com/simplejia/clog"
 )
 
+// DelReq 定义输入
 type DelReq struct {
 	ID int64 `json:"id"`
 }
@@ -29,7 +29,8 @@ func (delReq *DelReq) Regular() (ok bool) {
 	return
 }
 
-type DelRsp struct {
+// DelResp 定义输出
+type DelResp struct {
 }
 
 // Del just for demo
@@ -38,28 +39,36 @@ func (skel *Skel) Del(w http.ResponseWriter, r *http.Request) {
 	fun := "skel.Skel.Del"
 
 	var delReq *DelReq
-	err := json.Unmarshal(skel.ReadBody(r), &delReq)
-	if err != nil || !delReq.Regular() {
+	if err := json.Unmarshal(skel.ReadBody(r), &delReq); err != nil || !delReq.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, delReq)
 		skel.ReplyFail(w, lib.CodePara)
 		return
 	}
 
-	skelService := service.NewSkel()
-	err = skelService.Del(delReq.ID)
+	skelApi, err := service.NewSkel().Get(delReq.ID)
 	if err != nil {
-		clog.Error("%s del err: %v, req: %v", fun, err, delReq)
+		clog.Error("%s skel.Get err: %v, req: %v", fun, err, delReq)
 		skel.ReplyFail(w, lib.CodeSrv)
 		return
 	}
 
-	resp := &DelRsp{}
+	if skelApi == nil {
+		detail := "skel not found"
+		skel.ReplyFailWithDetail(w, lib.CodePara, detail)
+		return
+	}
+
+	if err := service.NewSkel().Del(delReq.ID); err != nil {
+		clog.Error("%s skel.Del err: %v, req: %v", fun, err, delReq)
+		skel.ReplyFail(w, lib.CodeSrv)
+		return
+	}
+
+	resp := &DelResp{}
 	skel.ReplyOk(w, resp)
 
-	skelAPI := api.NewSkel()
-	skelAPI.ID = delReq.ID
 	// 进行一些异步处理的工作
-	go lib.Updates(skelAPI, lib.DELETE, nil)
+	go lib.Updates(skelApi, lib.DELETE, nil)
 
 	return
 }

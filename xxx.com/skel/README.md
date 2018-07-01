@@ -12,4 +12,4 @@
     gomvpkg: golang.org/x/tools/cmd/gomvpkg
 
 ## 注意
-    如果在controller里修改了路由，编译前需执行go generate
+    如果在controller里修改了路由，编译前需执行go generate

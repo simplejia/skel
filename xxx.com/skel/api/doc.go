@@ -1,4 +1,4 @@
 /*
-Package api 用于对外数据定义。
+Package api 用于项目内数据定义。
 */
 package api

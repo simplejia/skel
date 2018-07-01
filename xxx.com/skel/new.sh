@@ -23,5 +23,6 @@ gomvpkg -from xxx.com/skel -to xxx.com/$proj && \
 git checkout .. && \
 git stash pop && \
 cd ../$proj && \
+sleep 1 && \
 sed "s/package $proj/package main/g" <main.go >main.go.new && mv main.go.new main.go && \
 sed "s/package $proj/package main/g" <WSP.go >WSP.go.new && mv WSP.go.new WSP.go

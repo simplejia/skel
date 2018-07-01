@@ -4,13 +4,7 @@ import (
 	"testing"
 
 	"xxx.com/skel/test"
-
-	"github.com/simplejia/lc"
 )
-
-func init() {
-	lc.Disabled = true
-}
 
 // 测试/skel/get
 func TestGet(t *testing.T) {

@@ -4,13 +4,7 @@ import (
 	"testing"
 
 	"xxx.com/skel/test"
-
-	"github.com/simplejia/lc"
 )
-
-func init() {
-	lc.Disabled = true
-}
 
 // 测试/skel/del
 func TestDel(t *testing.T) {
@@ -19,10 +13,10 @@ func TestDel(t *testing.T) {
 	skel := GetSkel()
 	id := skel.ID
 
-	err := Del(id)
-	if err != nil {
+	if err := Del(id); err != nil {
 		t.Fatal(err)
 	}
+
 	skelNew, err := Get(id)
 	if err != nil {
 		t.Fatal(err)

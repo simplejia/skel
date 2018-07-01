@@ -11,6 +11,7 @@ import (
 	"github.com/simplejia/clog"
 )
 
+// GetReq 定义输入
 type GetReq struct {
 	ID int64 `json:"id"`
 }
@@ -29,7 +30,8 @@ func (getReq *GetReq) Regular() (ok bool) {
 	return
 }
 
-type GetRsp struct {
+// GetResp 定义输出
+type GetResp struct {
 	Skel *api.Skel `json:"skel,omitempty"`
 }
 
@@ -39,25 +41,26 @@ func (skel *Skel) Get(w http.ResponseWriter, r *http.Request) {
 	fun := "skel.Skel.Get"
 
 	var getReq *GetReq
-	err := json.Unmarshal(skel.ReadBody(r), &getReq)
-	if err != nil || !getReq.Regular() {
+	if err := json.Unmarshal(skel.ReadBody(r), &getReq); err != nil || !getReq.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, getReq)
 		skel.ReplyFail(w, lib.CodePara)
 		return
 	}
 
-	skelService := service.NewSkel()
-	skelAPI, err := skelService.Get(getReq.ID)
+	skelApi, err := service.NewSkel().Get(getReq.ID)
 	if err != nil {
-		clog.Error("%s get err: %v, req: %v", fun, err, getReq)
+		clog.Error("%s skel.Get err: %v, req: %v", fun, err, getReq)
 		skel.ReplyFail(w, lib.CodeSrv)
 		return
 	}
 
-	resp := &GetRsp{
-		Skel: skelAPI,
+	resp := &GetResp{
+		Skel: skelApi,
 	}
 	skel.ReplyOk(w, resp)
+
+	// 进行一些异步处理的工作
+	go lib.Updates(skelApi, lib.GET, nil)
 
 	return
 }

@@ -11,20 +11,20 @@ import (
 	"xxx.com/skel/test"
 )
 
-// Set 封装controller.Set操作
-func Set(id int64) (err error) {
+// Add 封装controller.Add操作
+func Add(id int64) (err error) {
 	c := &Skel{}
-	p := &SetReq{
+	p := &AddReq{
 		ID: id,
 	}
-	body, err := lib.TestPost(c.Set, p)
+	body, err := lib.TestPost(c.Add, p)
 	if err != nil {
 		return
 	}
 
 	resp := &struct {
 		lib.Resp
-		Data SetRsp `json:"data"`
+		Data AddResp `json:"data"`
 	}{}
 	err = json.Unmarshal(body, resp)
 	if err != nil {
@@ -42,7 +42,7 @@ func Set(id int64) (err error) {
 // Del 封装controller.Del操作
 func Del(id int64) (err error) {
 	c := &Skel{}
-	p := &SetReq{
+	p := &DelReq{
 		ID: id,
 	}
 	body, err := lib.TestPost(c.Del, p)
@@ -52,7 +52,7 @@ func Del(id int64) (err error) {
 
 	resp := &struct {
 		lib.Resp
-		Data SetRsp `json:"data"`
+		Data AddResp `json:"data"`
 	}{}
 	err = json.Unmarshal(body, resp)
 	if err != nil {
@@ -68,7 +68,7 @@ func Del(id int64) (err error) {
 }
 
 // Get 封装controller.Get操作
-func Get(id int64) (skel *api.Skel, err error) {
+func Get(id int64) (skelApi *api.Skel, err error) {
 	c := &Skel{}
 	p := &GetReq{
 		ID: id,
@@ -80,7 +80,7 @@ func Get(id int64) (skel *api.Skel, err error) {
 
 	resp := &struct {
 		lib.Resp
-		Data GetRsp `json:"data"`
+		Data GetResp `json:"data"`
 	}{}
 	err = json.Unmarshal(body, resp)
 	if err != nil {
@@ -91,12 +91,12 @@ func Get(id int64) (skel *api.Skel, err error) {
 		return
 	}
 
-	skel = resp.Data.Skel
+	skelApi = resp.Data.Skel
 	return
 }
 
 // GetSkel 返回一个全新的skel对象
-func GetSkel() (skel *api.Skel) {
+func GetSkel() (skelApi *api.Skel) {
 	id := test.GetID()
 	for idTemp := id; ; idTemp++ {
 		if skelTemp, err := Get(idTemp); err != nil {
@@ -109,14 +109,16 @@ func GetSkel() (skel *api.Skel) {
 			break
 		}
 	}
-	if err := Set(id); err != nil {
+
+	if err := Add(id); err != nil {
 		panic(err)
 	}
-	skel, err := Get(id)
+
+	skelApi, err := Get(id)
 	if err != nil {
 		panic(err)
-	} else if skel == nil {
-		panic("GetSkel fail")
+	} else if skelApi == nil {
+		panic("get skel empty")
 	}
 
 	return

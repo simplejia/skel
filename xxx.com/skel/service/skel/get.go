@@ -5,23 +5,19 @@ import (
 	"xxx.com/skel/model"
 )
 
-func (skel *Skel) Get(id int64) (skelAPI *api.Skel, err error) {
-	fun := "skel.Skel.Get"
-	_ = fun
-
+// Get 定义获取操作
+func (skel *Skel) Get(id int64) (skelApi *api.Skel, err error) {
 	skelModel := model.NewSkel()
 	skelModel.ID = id
-	skelModelRet, err := skelModel.Get()
-	if err != nil {
+	if skelModel, err = skelModel.Get(); err != nil {
 		return
 	}
 
-	if skelModelRet == nil {
+	if skelModel == nil {
 		return
 	}
 
-	skelAPI = &api.Skel{
-		Skel: skelModelRet,
-	}
+	skelApi = (*api.Skel)(skelModel)
+
 	return
 }

@@ -2,15 +2,12 @@ package skel
 
 import "xxx.com/skel/model"
 
+// Del 定义删除操作
 func (skel *Skel) Del(id int64) (err error) {
-	fun := "skel.Skel.Del"
-	_ = fun
-
 	skelModel := model.NewSkel()
 	skelModel.ID = id
 
-	err = skelModel.Del()
-	if err != nil {
+	if err = skelModel.Del(); err != nil {
 		return
 	}
 

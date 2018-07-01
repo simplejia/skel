@@ -8,6 +8,20 @@ import "xxx.com/skel/controller/skel"
 import "xxx.com/skel/filter"
 
 func init() {
+	http.HandleFunc("/skel/add", func(w http.ResponseWriter, r *http.Request) {
+		t := time.Now()
+		_ = t
+		var e interface{}
+		c := new(skel.Skel)
+		defer func() {
+			e = recover()
+			if ok := filter.Boss(w, r, map[string]interface{}{"__T__": t, "__C__": c, "__E__": e, "__P__": "/skel/add"}); !ok {
+				return
+			}
+		}()
+		c.Add(w, r)
+	})
+
 	http.HandleFunc("/skel/del", func(w http.ResponseWriter, r *http.Request) {
 		t := time.Now()
 		_ = t
@@ -34,20 +48,6 @@ func init() {
 			}
 		}()
 		c.Get(w, r)
-	})
-
-	http.HandleFunc("/skel/set", func(w http.ResponseWriter, r *http.Request) {
-		t := time.Now()
-		_ = t
-		var e interface{}
-		c := new(skel.Skel)
-		defer func() {
-			e = recover()
-			if ok := filter.Boss(w, r, map[string]interface{}{"__T__": t, "__C__": c, "__E__": e, "__P__": "/skel/set"}); !ok {
-				return
-			}
-		}()
-		c.Set(w, r)
 	})
 
 }

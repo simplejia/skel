@@ -1,5 +1,5 @@
 /*
-Package conf 用于项目基本配置。
+Package conf 用于项目基础配置。
 */
 package conf
 

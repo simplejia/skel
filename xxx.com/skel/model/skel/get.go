@@ -2,15 +2,12 @@ package skel
 
 import (
 	"gopkg.in/mgo.v2"
-	"xxx.com/skel/mongo"
 )
 
+// Get 定义获取操作
 func (skel *Skel) Get() (skelRet *Skel, err error) {
-	db, table := skel.Db(), skel.Table()
-	session := mongo.DBS[db]
-	sessionCopy := session.Copy()
-	defer sessionCopy.Close()
-	c := sessionCopy.DB(db).C(table)
+	c := skel.GetC()
+	defer c.Database.Session.Close()
 
 	err = c.Find(skel).One(&skelRet)
 	if err != nil {

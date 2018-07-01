@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"xxx.com/lib"
+	"xxx.com/skel/conf"
 
 	"github.com/simplejia/clog"
 )
@@ -21,7 +22,15 @@ func Boss(w http.ResponseWriter, r *http.Request, m map[string]interface{}) bool
 		clog.Error("Boss() path: %v, body: %s, err: %v, stack: %s", path, c.ReadBody(r), err, debug.Stack())
 		w.WriteHeader(http.StatusInternalServerError)
 	} else {
-		clog.Info("Boss() path: %v, body: %s, elapse: %s", path, c.ReadBody(r), time.Since(bt))
+		if conf.Env == lib.PROD {
+			clog.Info("Boss() path: %v, body: %s, elapse: %s", path, c.ReadBody(r), time.Since(bt))
+		} else {
+			resp, ok := c.GetParam(lib.KeyResp)
+			if !ok {
+				resp = []byte(nil)
+			}
+			clog.Info("Boss() path: %v, body: %s, resp: %s, elapse: %s", path, c.ReadBody(r), resp.([]byte), time.Since(bt))
+		}
 	}
 	return true
 }

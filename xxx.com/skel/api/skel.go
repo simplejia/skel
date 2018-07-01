@@ -1,13 +1,11 @@
 package api
 
-import "xxx.com/skel/model/skel"
-
+// Skel 用于示例
 type Skel struct {
-	*skel.Skel
+	ID int64 `json:"id" bson:"_id"`
 }
 
+// NewSkel 生成skel对象
 func NewSkel() *Skel {
-	return &Skel{
-		Skel: &skel.Skel{},
-	}
+	return &Skel{}
 }
