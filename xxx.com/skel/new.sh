@@ -11,18 +11,20 @@ while [ -h "$this" ]; do
     fi
 done
 
+# configuration variables
+basedir=`dirname $this`
+cd $basedir
+basedir=`pwd`
+dirname=`basename $(dirname $basedir)`
+basename=`basename $basedir`
+
 proj=$1
 if [ ! $proj ];then
     echo "no proj name"
     exit
 fi
 
-git add . && \
-git stash && \
-gomvpkg -from xxx.com/skel -to xxx.com/$proj && \
-git checkout .. && \
-git stash pop && \
+gomvpkg -from $dirname/$basename -to $dirname/$proj && \
 cd ../$proj && \
-sleep 1 && \
 sed "s/package $proj/package main/g" <main.go >main.go.new && mv main.go.new main.go && \
 sed "s/package $proj/package main/g" <WSP.go >WSP.go.new && mv WSP.go.new WSP.go
