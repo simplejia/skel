@@ -7,6 +7,7 @@
     utils: github.com/simplejia/utils
     mongo: gopkg.in/mgo.v2
     redis: github.com/garyburd/redigo/redis
+    namecli: github.com/simplejia/namecli
     gomvpkg: golang.org/x/tools/cmd/gomvpkg
     以上依赖均可以通过类似`go get -u github.com/simplejia/wsp` 下载
 
