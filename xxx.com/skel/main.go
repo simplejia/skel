@@ -12,8 +12,8 @@ import (
 
 	"github.com/simplejia/clog"
 	"github.com/simplejia/lc"
-	"github.com/simplejia/namecli/api"
 	"github.com/simplejia/utils"
+	"xxx.com/lib"
 	"xxx.com/skel/conf"
 )
 
@@ -21,7 +21,7 @@ func init() {
 	lc.Init(1e5)
 
 	clog.AddrFunc = func() (string, error) {
-		return api.Name(conf.C.Addrs.Clog)
+		return lib.NameWrap(conf.C.Addrs.Clog)
 	}
 	clog.Init(conf.C.Clog.Name, "", conf.C.Clog.Level, conf.C.Clog.Mode)
 

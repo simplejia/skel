@@ -3,10 +3,8 @@
 ## 依赖
     wsp: github.com/simplejia/wsp
     lc: github.com/simplejia/lc
-    lm: github.com/simplejia/lm
     clog: github.com/simplejia/clog
     utils: github.com/simplejia/utils
-    namecli: github.com/simplejia/namecli
     mongo: gopkg.in/mgo.v2
     redis: github.com/garyburd/redigo/redis
     gomvpkg: golang.org/x/tools/cmd/gomvpkg
