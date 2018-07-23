@@ -168,34 +168,6 @@ func PostProxy(name, path string, req []byte) (rsp []byte, err error) {
 	return
 }
 
-func PostProxyWithHeader(name, path string, req []byte) (rsp []byte, header http.Header, err error) {
-	addr, err := NameWrap(name)
-	if err != nil {
-		return
-	}
-	url := fmt.Sprintf("http://%s/%s", addr, strings.TrimPrefix(path, "/"))
-
-	reader := bytes.NewReader(req)
-	r, err := http.Post(url, "application/json", reader)
-	if r != nil {
-		defer r.Body.Close()
-	}
-	if err != nil {
-		return
-	}
-	rsp, err = ioutil.ReadAll(r.Body)
-	if err != nil {
-		return
-	}
-	if g, e := r.StatusCode, http.StatusOK; g != e {
-		err = fmt.Errorf("http resp code: %d", g)
-		return
-	}
-
-	header = r.Header
-	return
-}
-
 func ClientWithProxy(name string) (client *http.Client, err error) {
 	if name == "" {
 		client = &http.Client{}
