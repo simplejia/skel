@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"math/rand"
 	"os"
 	"path/filepath"
 	"strings"
@@ -28,19 +27,6 @@ var (
 	// DBS 表示mongo连接，key是db名，value是db连接
 	DBS map[string]*mgo.Session = map[string]*mgo.Session{}
 )
-
-func SessionModeRand(session *mgo.Session) *mgo.Session {
-	if session == nil {
-		return nil
-	}
-
-	if rand.Intn(100) < 30 {
-		session.SetMode(mgo.PrimaryPreferred, true)
-	} else {
-		session.SetMode(mgo.SecondaryPreferred, true)
-	}
-	return session
-}
 
 func init() {
 	dir := "mongo"
