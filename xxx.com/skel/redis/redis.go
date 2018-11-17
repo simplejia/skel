@@ -16,7 +16,7 @@ import (
 	"xxx.com/skel/conf"
 
 	"github.com/garyburd/redigo/redis"
-	"github.com/simplejia/clog"
+	"github.com/simplejia/clog/api"
 	"github.com/simplejia/utils"
 )
 

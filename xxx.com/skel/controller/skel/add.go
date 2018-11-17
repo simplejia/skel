@@ -8,7 +8,7 @@ import (
 	"xxx.com/skel/api"
 	"xxx.com/skel/service"
 
-	"github.com/simplejia/clog"
+	"github.com/simplejia/clog/api"
 )
 
 // AddReq 定义输入

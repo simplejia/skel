@@ -7,7 +7,7 @@ import (
 	"xxx.com/lib"
 	"xxx.com/skel/service"
 
-	"github.com/simplejia/clog"
+	"github.com/simplejia/clog/api"
 )
 
 // DelReq 定义输入

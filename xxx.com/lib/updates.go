@@ -5,7 +5,7 @@ package lib
 import (
 	"runtime/debug"
 
-	"github.com/simplejia/clog"
+	"github.com/simplejia/clog/api"
 )
 
 // UpdateType 表示类型
