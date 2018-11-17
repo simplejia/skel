@@ -5,7 +5,7 @@
     lc: github.com/simplejia/lc
     clog: github.com/simplejia/clog
     utils: github.com/simplejia/utils
-    mongo: gopkg.in/mgo.v2
+    mongo: github.com/globalsign/mgo
     redis: github.com/garyburd/redigo/redis
     namecli: github.com/simplejia/namecli
     gomvpkg: golang.org/x/tools/cmd/gomvpkg

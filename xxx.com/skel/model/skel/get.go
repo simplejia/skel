@@ -1,7 +1,7 @@
 package skel
 
 import (
-	"gopkg.in/mgo.v2"
+	"github.com/globalsign/mgo"
 )
 
 // Get 定义获取操作

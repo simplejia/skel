@@ -4,7 +4,7 @@ Package skel just for demo
 package skel
 
 import (
-	mgo "gopkg.in/mgo.v2"
+	mgo "github.com/globalsign/mgo"
 	"xxx.com/skel/api"
 	"xxx.com/skel/mongo"
 )

@@ -1,7 +1,7 @@
 package skel
 
 import (
-	"gopkg.in/mgo.v2"
+	"github.com/globalsign/mgo"
 )
 
 // Del 定义删除操作
