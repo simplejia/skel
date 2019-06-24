@@ -1,0 +1,21 @@
+{
+    "prod": { // 运行环境，启动时通过-env参数指定，如：$prog -env prod
+        "schemes": [
+            {
+                "dsn": "mongodb://user:pwd@127.0.0.1:27017",
+                "db": "db",
+                "table": "table",
+                "auth_user": "user",
+                "db_num": 1,
+                "table_num": 1,
+                "indices": [
+                    {
+                        "fields": ["name"],
+                        "unique": true,
+                        "background": false
+                    }
+                ]
+            }
+        ]
+    }
+}
