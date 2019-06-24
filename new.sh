@@ -34,7 +34,7 @@ echo "begin generate new project..."
 (gomvpkg -from $pkgpath/skel -to $proj && \
 sed "s/package $pkg/package main/g" <main.go >main.go.new && mv main.go.new main.go && \
 sed "s/package $pkg/package main/g" <WSP.go >WSP.go.new && mv WSP.go.new WSP.go && \
-rm -rf tools skel new.sh install_tools.sh .git .gitignore  && \
+rm -rf tools skel new.sh install_tools.sh .git .gitignore ../${pkg}_api/.git && \
 gomvpkg -from $pkgpath/skel_api -to ${proj}_api)
 
 echo "begin download dependence..."
