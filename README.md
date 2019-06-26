@@ -5,6 +5,7 @@
 
 以下内容无特殊说明均是在skel项目目录下执行。
 
+```
 依赖安装：
 运行：./dep.sh
 运行：./install_tools.sh (注意，默认安装工具程序到$GOBIN目录下，请设置$PATH环境变量)
@@ -28,3 +29,4 @@
 运行：./gen_api.sh /user/get
 
 del_crud.sh和del_api.sh用于删除操作
+```
