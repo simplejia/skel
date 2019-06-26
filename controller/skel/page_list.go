@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/simplejia/lib"
 	"github.com/simplejia/skel/service"
 	"github.com/simplejia/skel_api"
+	"github.com/simplejia/utils"
 
 	clog "github.com/simplejia/clog/api"
 )
@@ -20,18 +20,18 @@ func (skel *Skel) PageList(w http.ResponseWriter, r *http.Request) {
 	var req *skel_api.SkelPageListReq
 	if err := json.Unmarshal(skel.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		skel.ReplyFail(w, lib.CodePara)
+		skel.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace(skel)
+	trace := utils.GetTrace(skel)
 
 	limitMore := req.Limit + 1
 
 	skelsAPI, err := service.NewSkel().WithTrace(trace).PageList(req.Offset, limitMore)
 	if err != nil {
 		clog.Error("%s skel.PageList err: %v, req: %v", fun, err, req)
-		skel.ReplyFail(w, lib.CodeSrv)
+		skel.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 

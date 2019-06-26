@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/simplejia/lib"
 	"github.com/simplejia/skel/service"
 	"github.com/simplejia/skel_api"
+	"github.com/simplejia/utils"
 
 	clog "github.com/simplejia/clog/api"
 )
@@ -20,16 +20,16 @@ func (skel *Skel) Add(w http.ResponseWriter, r *http.Request) {
 	var req *skel_api.SkelAddReq
 	if err := json.Unmarshal(skel.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		skel.ReplyFail(w, lib.CodePara)
+		skel.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace(skel)
+	trace := utils.GetTrace(skel)
 
 	skelAPI := (*skel_api.Skel)(req)
 	if err := service.NewSkel().WithTrace(trace).Add(skelAPI); err != nil {
 		clog.Error("%s skel.Add err: %v, req: %v", fun, err, req)
-		skel.ReplyFail(w, lib.CodeSrv)
+		skel.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -37,7 +37,7 @@ func (skel *Skel) Add(w http.ResponseWriter, r *http.Request) {
 	skel.ReplyOk(w, resp)
 
 	// 进行一些异步处理的工作
-	go lib.Updates(skelAPI, lib.ADD, nil)
+	go utils.Updates(skelAPI, utils.ADD, nil)
 
 	return
 }

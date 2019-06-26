@@ -1,8 +1,8 @@
 package skel
 
-import "github.com/simplejia/lib"
+import "github.com/simplejia/utils"
 
 // Skel 定义主对象
 type Skel struct {
-	lib.Base
+	utils.Base
 }

@@ -15,7 +15,6 @@ import (
 
 	"github.com/simplejia/clog/api"
 	"github.com/simplejia/lc"
-	"github.com/simplejia/lib"
 	"github.com/simplejia/namecli/api"
 	"github.com/simplejia/skel/conf"
 	"github.com/simplejia/utils"
@@ -37,13 +36,13 @@ func init() {
 
 func main() {
 	fun := "main"
-	clog.Info("%s rlimit nofile: %s", fun, lib.RlimitNofile())
+	clog.Info("%s rlimit nofile: %s", fun, utils.RlimitNofile())
 
 	addr := fmt.Sprintf(":%d", conf.C.App.Port)
 
 	rootHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		done := make(chan struct{})
-		ctx, cancelCtx := context.WithCancel(context.WithValue(r.Context(), lib.CtxDone, done))
+		ctx, cancelCtx := context.WithCancel(context.WithValue(r.Context(), utils.CtxDone, done))
 		r = r.WithContext(ctx)
 
 		go func() {
@@ -60,5 +59,5 @@ func main() {
 		clog.Error("%s err: %v, addr: %v", fun, err, addr)
 	}
 
-	lib.AsyncTaskShutdown(time.Second * 3)
+	utils.AsyncTaskShutdown(time.Second * 3)
 }

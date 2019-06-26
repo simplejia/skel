@@ -6,8 +6,8 @@ import (
 
 	"github.com/simplejia/skel_api"
 
-	"github.com/simplejia/lib"
 	"github.com/simplejia/skel/service"
+	"github.com/simplejia/utils"
 
 	clog "github.com/simplejia/clog/api"
 )
@@ -21,15 +21,15 @@ func (skel *Skel) Del(w http.ResponseWriter, r *http.Request) {
 	var req *skel_api.SkelDelReq
 	if err := json.Unmarshal(skel.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		skel.ReplyFail(w, lib.CodePara)
+		skel.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace(skel)
+	trace := utils.GetTrace(skel)
 
 	if err := service.NewSkel().WithTrace(trace).Del(req.ID); err != nil {
 		clog.Error("%s skel.Del err: %v, req: %v", fun, err, req)
-		skel.ReplyFail(w, lib.CodeSrv)
+		skel.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -39,7 +39,7 @@ func (skel *Skel) Del(w http.ResponseWriter, r *http.Request) {
 	skelAPI := &skel_api.Skel{ID: req.ID}
 
 	// 进行一些异步处理的工作
-	go lib.Updates(skelAPI, lib.DELETE, nil)
+	go utils.Updates(skelAPI, utils.DELETE, nil)
 
 	return
 }

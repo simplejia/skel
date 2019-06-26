@@ -2,16 +2,16 @@ package skel
 
 import (
 	"github.com/globalsign/mgo"
-	"github.com/simplejia/lib"
 	"github.com/simplejia/skel/mongo"
+	"github.com/simplejia/utils"
 )
 
 // Skel 定义Skel类型
 type Skel struct {
-	*lib.Trace
+	*utils.Trace
 }
 
-func (skel *Skel) WithTrace(trace *lib.Trace) *Skel {
+func (skel *Skel) WithTrace(trace *utils.Trace) *Skel {
 	if skel == nil {
 		return nil
 	}

@@ -1,14 +1,14 @@
 package skel
 
 import (
-	"github.com/simplejia/lib"
 	"github.com/simplejia/skel_api"
+	"github.com/simplejia/utils"
 )
 
 // Update 定义更新操作
 func (skel *Skel) Update(skelAPI *skel_api.Skel) (err error) {
 	fun := "model.skel.Skel.Update"
-	defer lib.TraceMe(skel.Trace, fun)()
+	defer utils.TraceMe(skel.Trace, fun)()
 
 	c := skel.GetC()
 	defer c.Database.Session.Close()
@@ -24,7 +24,7 @@ func (skel *Skel) Update(skelAPI *skel_api.Skel) (err error) {
 // Upsert 定义upsert操作
 func (skel *Skel) Upsert(skelAPI *skel_api.Skel) (err error) {
 	fun := "model.skel.Skel.Upsert"
-	defer lib.TraceMe(skel.Trace, fun)()
+	defer utils.TraceMe(skel.Trace, fun)()
 
 	c := skel.GetC()
 	defer c.Database.Session.Close()

@@ -53,7 +53,6 @@ import (
 	"time"
 
 	"github.com/simplejia/utils"
-	"{{.pkg}}/lib"
 )
 
 // {{.camel}}GetReq 定义输入
@@ -82,8 +81,8 @@ func ({{.lower}}GetReq *{{.camel}}GetReq) Regular() (ok bool) {
 // {{.camel}}GetResp 定义输出
 type {{.camel}}GetResp {{.camel}}
 
-func {{.camel}}Get(name string, req *{{.camel}}GetReq, trace *lib.Trace) (resp *{{.camel}}GetResp, result *lib.Resp, err error) {
-	addr, err := lib.NameWrap(name)
+func {{.camel}}Get(name string, req *{{.camel}}GetReq, trace *utils.Trace) (resp *{{.camel}}GetResp, result *utils.Resp, err error) {
+	addr, err := utils.NameWrap(name)
 	if err != nil {
 		return
 	}
@@ -109,7 +108,7 @@ func {{.camel}}Get(name string, req *{{.camel}}GetReq, trace *lib.Trace) (resp *
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.camel}}GetResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
@@ -117,7 +116,7 @@ func {{.camel}}Get(name string, req *{{.camel}}GetReq, trace *lib.Trace) (resp *
 		return
 	}
 
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -135,7 +134,6 @@ import (
 	"time"
 
 	"github.com/simplejia/utils"
-	"{{.pkg}}/lib"
 )
 
 // {{.camel}}GetsReq 定义输入
@@ -173,8 +171,8 @@ func ({{.lower}}GetsReq *{{.camel}}GetsReq) Regular() (ok bool) {
 // {{.camel}}GetsResp 定义输出
 type {{.camel}}GetsResp map[{{template "map_key" dict "keys" .keys "id_type" .id_type}}]{{if gt (len (split_keys .keys)) 1}}[]{{end}}*{{.camel}}
 
-func {{.camel}}Gets(name string, req *{{.camel}}GetsReq, trace *lib.Trace) (resp *{{.camel}}GetsResp, result *lib.Resp, err error) {
-	addr, err := lib.NameWrap(name)
+func {{.camel}}Gets(name string, req *{{.camel}}GetsReq, trace *utils.Trace) (resp *{{.camel}}GetsResp, result *utils.Resp, err error) {
+	addr, err := utils.NameWrap(name)
 	if err != nil {
 		return
 	}
@@ -200,7 +198,7 @@ func {{.camel}}Gets(name string, req *{{.camel}}GetsReq, trace *lib.Trace) (resp
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.camel}}GetsResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
@@ -208,7 +206,7 @@ func {{.camel}}Gets(name string, req *{{.camel}}GetsReq, trace *lib.Trace) (resp
 		return
 	}
 
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -226,7 +224,6 @@ import (
 	"time"
 
 	"github.com/simplejia/utils"
-	"{{.pkg}}/lib"
 )
 
 // {{.camel}}AddReq 定义输入
@@ -245,8 +242,8 @@ func ({{.lower}}AddReq *{{.camel}}AddReq) Regular() (ok bool) {
 // {{.camel}}AddResp 定义输出
 type {{.camel}}AddResp {{.camel}}
 
-func {{.camel}}Add(name string, req *{{.camel}}AddReq, trace *lib.Trace) (resp *{{.camel}}AddResp, result *lib.Resp, err error) {
-	addr, err := lib.NameWrap(name)
+func {{.camel}}Add(name string, req *{{.camel}}AddReq, trace *utils.Trace) (resp *{{.camel}}AddResp, result *utils.Resp, err error) {
+	addr, err := utils.NameWrap(name)
 	if err != nil {
 		return
 	}
@@ -272,7 +269,7 @@ func {{.camel}}Add(name string, req *{{.camel}}AddReq, trace *lib.Trace) (resp *
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.camel}}AddResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
@@ -280,7 +277,7 @@ func {{.camel}}Add(name string, req *{{.camel}}AddReq, trace *lib.Trace) (resp *
 		return
 	}
 
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -298,7 +295,6 @@ import (
 	"time"
 
 	"github.com/simplejia/utils"
-	"{{.pkg}}/lib"
 )
 
 // {{.camel}}DelReq 定义输入
@@ -328,8 +324,8 @@ func ({{.lower}}DelReq *{{.camel}}DelReq) Regular() (ok bool) {
 type {{.camel}}DelResp struct {
 }
 
-func {{.camel}}Del(name string, req *{{.camel}}DelReq, trace *lib.Trace) (resp *{{.camel}}DelResp, result *lib.Resp, err error) {
-	addr, err := lib.NameWrap(name)
+func {{.camel}}Del(name string, req *{{.camel}}DelReq, trace *utils.Trace) (resp *{{.camel}}DelResp, result *utils.Resp, err error) {
+	addr, err := utils.NameWrap(name)
 	if err != nil {
 		return
 	}
@@ -355,7 +351,7 @@ func {{.camel}}Del(name string, req *{{.camel}}DelReq, trace *lib.Trace) (resp *
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.camel}}DelResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
@@ -363,7 +359,7 @@ func {{.camel}}Del(name string, req *{{.camel}}DelReq, trace *lib.Trace) (resp *
 		return
 	}
 
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -381,7 +377,6 @@ import (
 	"time"
 
 	"github.com/simplejia/utils"
-	"{{.pkg}}/lib"
 )
 
 // {{.camel}}UpdateReq 定义输入
@@ -400,8 +395,8 @@ func ({{.lower}}UpdateReq *{{.camel}}UpdateReq) Regular() (ok bool) {
 // {{.camel}}UpdateResp 定义输出
 type {{.camel}}UpdateResp {{.camel}}
 
-func {{.camel}}Update(name string, req *{{.camel}}UpdateReq, trace *lib.Trace) (resp *{{.camel}}UpdateResp, result *lib.Resp, err error) {
-	addr, err := lib.NameWrap(name)
+func {{.camel}}Update(name string, req *{{.camel}}UpdateReq, trace *utils.Trace) (resp *{{.camel}}UpdateResp, result *utils.Resp, err error) {
+	addr, err := utils.NameWrap(name)
 	if err != nil {
 		return
 	}
@@ -427,7 +422,7 @@ func {{.camel}}Update(name string, req *{{.camel}}UpdateReq, trace *lib.Trace) (
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.camel}}UpdateResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
@@ -435,7 +430,7 @@ func {{.camel}}Update(name string, req *{{.camel}}UpdateReq, trace *lib.Trace) (
 		return
 	}
 
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -453,7 +448,6 @@ import (
 	"time"
 
 	"github.com/simplejia/utils"
-	"{{.pkg}}/lib"
 )
 
 // {{.camel}}PageListReq 定义输入
@@ -490,8 +484,8 @@ type {{.camel}}PageListResp struct {
 	Total int` + " `" + `json:"total,omitempty"` + "`" + `
 }
 
-func {{.camel}}PageList(name string, req *{{.camel}}PageListReq, trace *lib.Trace) (resp *{{.camel}}PageListResp, result *lib.Resp, err error) {
-	addr, err := lib.NameWrap(name)
+func {{.camel}}PageList(name string, req *{{.camel}}PageListReq, trace *utils.Trace) (resp *{{.camel}}PageListResp, result *utils.Resp, err error) {
+	addr, err := utils.NameWrap(name)
 	if err != nil {
 		return
 	}
@@ -517,7 +511,7 @@ func {{.camel}}PageList(name string, req *{{.camel}}PageListReq, trace *lib.Trac
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.camel}}PageListResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
@@ -525,7 +519,7 @@ func {{.camel}}PageList(name string, req *{{.camel}}PageListReq, trace *lib.Trac
 		return
 	}
 
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -543,7 +537,6 @@ import (
 	"time"
 
 	"github.com/simplejia/utils"
-	"{{.pkg}}/lib"
 )
 
 // {{.camel}}FlowListReq 定义输入
@@ -580,8 +573,8 @@ type {{.camel}}FlowListResp struct {
 	Total int` + " `" + `json:"total,omitempty"` + "`" + `
 }
 
-func {{.camel}}FlowList(name string, req *{{.camel}}FlowListReq, trace *lib.Trace) (resp *{{.camel}}FlowListResp, result *lib.Resp, err error) {
-	addr, err := lib.NameWrap(name)
+func {{.camel}}FlowList(name string, req *{{.camel}}FlowListReq, trace *utils.Trace) (resp *{{.camel}}FlowListResp, result *utils.Resp, err error) {
+	addr, err := utils.NameWrap(name)
 	if err != nil {
 		return
 	}
@@ -607,7 +600,7 @@ func {{.camel}}FlowList(name string, req *{{.camel}}FlowListReq, trace *lib.Trac
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.camel}}FlowListResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
@@ -615,7 +608,7 @@ func {{.camel}}FlowList(name string, req *{{.camel}}FlowListReq, trace *lib.Trac
 		return
 	}
 
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -633,7 +626,6 @@ import (
 	"time"
 
 	"github.com/simplejia/utils"
-	"{{.pkg}}/lib"
 )
 
 // {{.camel}}UpsertReq 定义输入
@@ -652,8 +644,8 @@ func ({{.lower}}UpsertReq *{{.camel}}UpsertReq) Regular() (ok bool) {
 // {{.camel}}UpsertResp 定义输出
 type {{.camel}}UpsertResp {{.camel}}
 
-func {{.camel}}Upsert(name string, req *{{.camel}}UpsertReq, trace *lib.Trace) (resp *{{.camel}}UpsertResp, result *lib.Resp, err error) {
-	addr, err := lib.NameWrap(name)
+func {{.camel}}Upsert(name string, req *{{.camel}}UpsertReq, trace *utils.Trace) (resp *{{.camel}}UpsertResp, result *utils.Resp, err error) {
+	addr, err := utils.NameWrap(name)
 	if err != nil {
 		return
 	}
@@ -679,7 +671,7 @@ func {{.camel}}Upsert(name string, req *{{.camel}}UpsertReq, trace *lib.Trace) (
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.camel}}UpsertResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
@@ -687,7 +679,7 @@ func {{.camel}}Upsert(name string, req *{{.camel}}UpsertReq, trace *lib.Trace) (
 		return
 	}
 
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -700,9 +692,9 @@ func {{.camel}}Upsert(name string, req *{{.camel}}UpsertReq, trace *lib.Trace) (
 var tplModel = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/conf"
-	"{{.pkg}}/{{.proj}}/mongo"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/conf"
+	"{{.pkg}}{{.proj}}/mongo"
 )
 
 {{- if .need_multi_table}}
@@ -715,7 +707,7 @@ var (
 
 func init() {
 	// 方便本地测试
-	if conf.Env == lib.DEV {
+	if conf.Env == utils.DEV {
 		DbNum = 1
 		TableNum = 1
 	}
@@ -724,10 +716,10 @@ func init() {
 
 // {{.camel}} 定义{{.camel}}类型
 type {{.camel}} struct {
-	*lib.Trace
+	*utils.Trace
 }
 
-func ({{.lower}} *{{.camel}}) WithTrace(trace *lib.Trace) *{{.camel}} {
+func ({{.lower}} *{{.camel}}) WithTrace(trace *utils.Trace) *{{.camel}} {
 	if {{.lower}} == nil {
 		return nil
 	}
@@ -823,14 +815,14 @@ func ({{.lower}} *{{.camel}}) Groups({{template "id" .keys}}s []{{template "id_t
 
 var tplService = `package {{.snake}}
 
-import "{{.pkg}}/lib"
+import "github.com/simplejia/utils"
 
 // {{.camel}} 定义{{.camel}}类型
 type {{.camel}} struct {
-	*lib.Trace
+	*utils.Trace
 }
 
-func ({{.lower}} *{{.camel}}) WithTrace(trace *lib.Trace) *{{.camel}} {
+func ({{.lower}} *{{.camel}}) WithTrace(trace *utils.Trace) *{{.camel}} {
 	if {{.lower}} == nil {
 		return nil
 	}
@@ -843,9 +835,9 @@ func ({{.lower}} *{{.camel}}) WithTrace(trace *lib.Trace) *{{.camel}} {
 var tplServiceGet = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/model"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/model"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 {{- define "id_and_id_type"}}
@@ -921,7 +913,7 @@ ID
 // Get 定义获取操作
 func ({{.lower}} *{{.camel}}) Get({{template "id_and_id_type" dict "keys" .keys "id_type" .id_type}}) ({{.lower}}API *{{.proj}}_api.{{.camel}}, err error) {
 	fun := "service.{{.snake}}.{{.camel}}.Get"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	if {{.lower}}API, err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).Get({{template "id" dict "keys" .keys "id_type" .id_type}}); err != nil {
 		return
@@ -933,7 +925,7 @@ func ({{.lower}} *{{.camel}}) Get({{template "id_and_id_type" dict "keys" .keys 
 // Gets 定义批量获取操作
 func ({{.lower}} *{{.camel}}) Gets({{template "id_and_id_type_map" dict "keys" .keys "id_type" .id_type}}) ({{.lower}}sAPI map[{{template "map_key" dict "keys" .keys "id_type" .id_type}}]{{if gt (len (split_keys .keys)) 1}}[]{{end}}*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "service.{{.snake}}.{{.camel}}.Gets"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	{{.lower}}sSliceAPI, err := model.New{{.camel}}().WithTrace({{.lower}}.Trace).Gets({{template "id_map" dict "keys" .keys "id_type" .id_type}})
 	if err != nil {
@@ -960,15 +952,15 @@ func ({{.lower}} *{{.camel}}) Gets({{template "id_and_id_type_map" dict "keys" .
 var tplServiceAdd = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/model"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/model"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 // Add 定义新增操作
 func ({{.lower}} *{{.camel}}) Add({{.lower}}API *{{.proj}}_api.{{.camel}}) (err error) {
 	fun := "service.{{.snake}}.{{.camel}}.Add"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	if err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).Add({{.lower}}API); err != nil {
 		return
@@ -981,8 +973,8 @@ func ({{.lower}} *{{.camel}}) Add({{.lower}}API *{{.proj}}_api.{{.camel}}) (err 
 var tplServiceDel = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/model"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/model"
 )
 
 {{- define "id_and_id_type"}}
@@ -1018,7 +1010,7 @@ id
 // Del 定义删除操作
 func ({{.lower}} *{{.camel}}) Del({{template "id_and_id_type" dict "keys" .keys "id_type" .id_type}}) (err error) {
 	fun := "service.{{.snake}}.{{.camel}}.Del"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	if err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).Del({{template "id" .keys}}); err != nil {
 		return
@@ -1031,15 +1023,15 @@ func ({{.lower}} *{{.camel}}) Del({{template "id_and_id_type" dict "keys" .keys 
 var tplServiceUpdate = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/model"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/model"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 // Update 定义更新操作
 func ({{.lower}} *{{.camel}}) Update({{.lower}}API *{{.proj}}_api.{{.camel}}) (err error) {
 	fun := "service.{{.snake}}.{{.camel}}.Update"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	if err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).Update({{.lower}}API); err != nil {
 		return
@@ -1051,7 +1043,7 @@ func ({{.lower}} *{{.camel}}) Update({{.lower}}API *{{.proj}}_api.{{.camel}}) (e
 // Upsert 定义upsert操作
 func ({{.lower}} *{{.camel}}) Upsert({{.lower}}API *{{.proj}}_api.{{.camel}}) (err error) {
 	fun := "service.{{.snake}}.{{.camel}}.Upsert"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	if err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).Upsert({{.lower}}API); err != nil {
 		return
@@ -1064,9 +1056,9 @@ func ({{.lower}} *{{.camel}}) Upsert({{.lower}}API *{{.proj}}_api.{{.camel}}) (e
 var tplServiceList = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/model"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/model"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 {{- define "id_and_id_type_page"}}
@@ -1104,7 +1096,7 @@ id {{.id_type}}
 // PageList 定义page_list操作
 func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type_page" .keys}}offset, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "service.{{.snake}}.{{.camel}}.PageList"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	if {{.lower}}sAPI, err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).PageList({{template "id_page" .keys}}offset, limit); err != nil {
 		return
@@ -1116,7 +1108,7 @@ func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type_page" .keys}}o
 // FlowList 定义list操作
 func ({{.lower}} *{{.camel}}) FlowList({{template "id_and_id_type_flow" dict "keys" .keys "id_type" .id_type}}, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "service.{{.snake}}.{{.camel}}.FlowList"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	if {{.lower}}sAPI, err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).FlowList({{template "id_flow" dict "keys" .keys "id_type" .id_type}}, limit); err != nil {
 		return
@@ -1129,8 +1121,8 @@ func ({{.lower}} *{{.camel}}) FlowList({{template "id_and_id_type_flow" dict "ke
 var tplModelGet = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 {{- $lower := .lower}}
@@ -1173,7 +1165,7 @@ id
 // Get 定义获取操作
 func ({{.lower}} *{{.camel}}) Get({{template "id_and_id_type" dict "keys" .keys "id_type" .id_type}}) ({{.lower}}API *{{.proj}}_api.{{.camel}}, err error) {
 	fun := "model.{{.snake}}.{{.camel}}.Get"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id" .keys}}{{end}})
 	defer c.Database.Session.Close()
@@ -1204,7 +1196,7 @@ func ({{.lower}} *{{.camel}}) Get({{template "id_and_id_type" dict "keys" .keys 
 // Gets 定义批量获取操作
 func ({{.lower}} *{{.camel}}) Gets({{template "id_and_id_type_map" dict "keys" .keys "id_type" .id_type}}) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "model.{{.snake}}.{{.camel}}.Gets"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	{{if .need_multi_table}}
 	{{- if gt (len (split_keys .keys)) 1}}
@@ -1281,8 +1273,8 @@ func ({{.lower}} *{{.camel}}) Gets({{template "id_and_id_type_map" dict "keys" .
 var tplModelAdd = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 {{- define "id"}}
@@ -1298,7 +1290,7 @@ ID
 // Add 定义新增操作
 func ({{.lower}} *{{.camel}}) Add({{.lower}}API *{{.proj}}_api.{{.camel}}) (err error) {
 	fun := "model.{{.snake}}.{{.camel}}.Add"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	c := {{.lower}}.GetC({{if .need_multi_table}}{{.lower}}API.{{template "id" .keys}}{{end}})
 	defer c.Database.Session.Close()
@@ -1315,7 +1307,7 @@ func ({{.lower}} *{{.camel}}) Add({{.lower}}API *{{.proj}}_api.{{.camel}}) (err 
 var tplModelDel = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
+	"github.com/simplejia/utils"
 )
 
 {{- define "id_and_id_type"}}
@@ -1347,7 +1339,7 @@ id
 // Del 定义删除操作
 func ({{.lower}} *{{.camel}}) Del({{template "id_and_id_type" dict "keys" .keys "id_type" .id_type}}) (err error) {
 	fun := "model.{{.snake}}.{{.camel}}.Del"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id" .keys}}{{end}})
 	defer c.Database.Session.Close()
@@ -1375,8 +1367,8 @@ func ({{.lower}} *{{.camel}}) Del({{template "id_and_id_type" dict "keys" .keys 
 var tplModelUpdate = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 {{- $lower := .lower}}
@@ -1409,7 +1401,7 @@ id {{.id_type}}
 // Update 定义更新操作
 func ({{.lower}} *{{.camel}}) Update({{.lower}}API *{{.proj}}_api.{{.camel}}) (err error) {
 	fun := "model.{{.snake}}.{{.camel}}.Update"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	c := {{.lower}}.GetC({{if .need_multi_table}}{{.lower}}API.{{template "id" .keys}}{{end}})
 	defer c.Database.Session.Close()
@@ -1436,7 +1428,7 @@ func ({{.lower}} *{{.camel}}) Update({{.lower}}API *{{.proj}}_api.{{.camel}}) (e
 // Upsert 定义upsert操作
 func ({{.lower}} *{{.camel}}) Upsert({{.lower}}API *{{.proj}}_api.{{.camel}}) (err error) {
 	fun := "model.{{.snake}}.{{.camel}}.Upsert"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	c := {{.lower}}.GetC({{if .need_multi_table}}{{.lower}}API.{{template "id" .keys}}{{end}})
 	defer c.Database.Session.Close()
@@ -1464,8 +1456,8 @@ func ({{.lower}} *{{.camel}}) Upsert({{.lower}}API *{{.proj}}_api.{{.camel}}) (e
 var tplModelList = `package {{.snake}}
 
 import (
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 {{- $id_type := .id_type}}
@@ -1520,7 +1512,7 @@ _id
 // PageList 定义page_list操作
 func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type_page" .keys}}offset, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "model.{{.snake}}.{{.camel}}.PageList"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id_page" dict "keys" .keys "id_type" .id_type}}{{end}})
 	defer c.Database.Session.Close()
@@ -1543,7 +1535,7 @@ func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type_page" .keys}}o
 // FlowList 定义flow_list操作
 func ({{.lower}} *{{.camel}}) FlowList({{template "id_and_id_type_flow" dict "keys" .keys "id_type" .id_type}}, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "model.{{.snake}}.{{.camel}}.FlowList"
-	defer lib.TraceMe({{.lower}}.Trace, fun)()
+	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
 	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id_flow" .keys}}{{end}})
 	defer c.Database.Session.Close()
@@ -1582,11 +1574,11 @@ var tplFunc = `func New{{.camel}}() *{{.snake}}.{{.camel}} {
 
 var tplController = `package {{.snake}}
 
-import "{{.pkg}}/lib"
+import "github.com/simplejia/utils"
 
 // {{.camel}} 定义主对象
 type {{.camel}} struct {
-	lib.Base
+	utils.Base
 }
 `
 
@@ -1596,9 +1588,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/service"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/service"
+	"{{.pkg}}{{.proj}}_api"
 
 	"github.com/simplejia/clog/api"
 )
@@ -1628,16 +1620,16 @@ func ({{.lower}} *{{.camel}}) Get(w http.ResponseWriter, r *http.Request) {
 	var req *{{.proj}}_api.{{.camel}}GetReq
 	if err := json.Unmarshal({{.lower}}.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodePara)
+		{{.lower}}.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace({{.lower}})
+	trace := utils.GetTrace({{.lower}})
 
 	{{.lower}}API, err := service.New{{.camel}}().WithTrace(trace).Get({{template "id" .keys}})
 	if err != nil {
 		clog.Error("%s {{.lower}}.Get err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodeSrv)
+		{{.lower}}.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -1654,9 +1646,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/service"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/service"
+	"{{.pkg}}{{.proj}}_api"
 
 	"github.com/simplejia/clog/api"
 )
@@ -1680,16 +1672,16 @@ func ({{.lower}} *{{.camel}}) Gets(w http.ResponseWriter, r *http.Request) {
 	var req *{{.proj}}_api.{{.camel}}GetsReq
 	if err := json.Unmarshal({{.lower}}.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodePara)
+		{{.lower}}.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace({{.lower}})
+	trace := utils.GetTrace({{.lower}})
 
 	{{.lower}}sAPI, err := service.New{{.camel}}().WithTrace(trace).Gets({{template "id_map" dict "keys" .keys "id_type" .id_type}})
 	if err != nil {
 		clog.Error("%s {{.lower}}.Gets err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodeSrv)
+		{{.lower}}.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -1706,10 +1698,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/api"
-	"{{.pkg}}/{{.proj}}/service"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/api"
+	"{{.pkg}}{{.proj}}/service"
+	"{{.pkg}}{{.proj}}_api"
 
 	"github.com/simplejia/clog/api"
 )
@@ -1738,16 +1730,16 @@ func ({{.lower}} *{{.camel}}) Add(w http.ResponseWriter, r *http.Request) {
 	var req *{{.proj}}_api.{{.camel}}AddReq
 	if err := json.Unmarshal({{.lower}}.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodePara)
+		{{.lower}}.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace({{.lower}})
+	trace := utils.GetTrace({{.lower}})
 
 	{{.lower}}API := (*{{.proj}}_api.{{.camel}})(req)
 	if err := service.New{{.camel}}().WithTrace(trace).Add({{.lower}}API); err != nil {
 		clog.Error("%s {{.lower}}.Add err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodeSrv)
+		{{.lower}}.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -1755,7 +1747,7 @@ func ({{.lower}} *{{.camel}}) Add(w http.ResponseWriter, r *http.Request) {
 	{{.lower}}.ReplyOk(w, resp)
 
 	// 进行一些异步处理的工作
-	go lib.Updates({{.lower}}API, lib.ADD, nil)
+	go utils.Updates({{.lower}}API, utils.ADD, nil)
 
 	return
 }
@@ -1767,11 +1759,11 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"{{.pkg}}/{{.proj}}/api"
-	"{{.pkg}}/{{.proj}}_api"
+	"{{.pkg}}{{.proj}}/api"
+	"{{.pkg}}{{.proj}}_api"
 
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/service"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/service"
 
 	"github.com/simplejia/clog/api"
 )
@@ -1800,15 +1792,15 @@ func ({{.lower}} *{{.camel}}) Del(w http.ResponseWriter, r *http.Request) {
 	var req *{{.proj}}_api.{{.camel}}DelReq
 	if err := json.Unmarshal({{.lower}}.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodePara)
+		{{.lower}}.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace({{.lower}})
+	trace := utils.GetTrace({{.lower}})
 
 	if err := service.New{{.camel}}().WithTrace(trace).Del({{template "id" .keys}}); err != nil {
 		clog.Error("%s {{.lower}}.Del err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodeSrv)
+		{{.lower}}.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -1828,7 +1820,7 @@ func ({{.lower}} *{{.camel}}) Del(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 进行一些异步处理的工作
-	go lib.Updates({{.lower}}API, lib.DELETE, nil)
+	go utils.Updates({{.lower}}API, utils.DELETE, nil)
 
 	return
 }
@@ -1840,10 +1832,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/api"
-	"{{.pkg}}/{{.proj}}/service"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/api"
+	"{{.pkg}}{{.proj}}/service"
+	"{{.pkg}}{{.proj}}_api"
 
 	"github.com/simplejia/clog/api"
 )
@@ -1872,16 +1864,16 @@ func ({{.lower}} *{{.camel}}) Update(w http.ResponseWriter, r *http.Request) {
 	var req *{{.proj}}_api.{{.camel}}UpdateReq
 	if err := json.Unmarshal({{.lower}}.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodePara)
+		{{.lower}}.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace({{.lower}})
+	trace := utils.GetTrace({{.lower}})
 
 	{{.lower}}API := (*{{.proj}}_api.{{.camel}})(req)
 	if err := service.New{{.camel}}().WithTrace(trace).Update({{.lower}}API); err != nil {
 		clog.Error("%s {{.lower}}.Update err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodeSrv)
+		{{.lower}}.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -1889,7 +1881,7 @@ func ({{.lower}} *{{.camel}}) Update(w http.ResponseWriter, r *http.Request) {
 	{{.lower}}.ReplyOk(w, resp)
 
 	// 进行一些异步处理的工作
-	go lib.Updates({{.lower}}API, lib.UPDATE, nil)
+	go utils.Updates({{.lower}}API, utils.UPDATE, nil)
 
 	return
 }
@@ -1901,9 +1893,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/service"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/service"
+	"{{.pkg}}{{.proj}}_api"
 
 	"github.com/simplejia/clog/api"
 )
@@ -1923,18 +1915,18 @@ func ({{.lower}} *{{.camel}}) PageList(w http.ResponseWriter, r *http.Request) {
 	var req *{{.proj}}_api.{{.camel}}PageListReq
 	if err := json.Unmarshal({{.lower}}.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodePara)
+		{{.lower}}.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace({{.lower}})
+	trace := utils.GetTrace({{.lower}})
 
 	limitMore := req.Limit + 1
 
 	{{.lower}}sAPI, err := service.New{{.camel}}().WithTrace(trace).PageList({{template "id" .keys}}req.Offset, limitMore)
 	if err != nil {
 		clog.Error("%s {{.lower}}.PageList err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodeSrv)
+		{{.lower}}.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -1967,9 +1959,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/service"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/service"
+	"{{.pkg}}{{.proj}}_api"
 
 	"github.com/simplejia/clog/api"
 )
@@ -1993,18 +1985,18 @@ func ({{.lower}} *{{.camel}}) FlowList(w http.ResponseWriter, r *http.Request) {
 	var req *{{.proj}}_api.{{.camel}}FlowListReq
 	if err := json.Unmarshal({{.lower}}.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodePara)
+		{{.lower}}.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace({{.lower}})
+	trace := utils.GetTrace({{.lower}})
 
 	limitMore := req.Limit + 1
 
 	{{.lower}}sAPI, err := service.New{{.camel}}().WithTrace(trace).FlowList({{template "id" dict "keys" .keys "id_type" .id_type}}, limitMore)
 	if err != nil {
 		clog.Error("%s {{.lower}}.FlowList err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodeSrv)
+		{{.lower}}.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -2036,10 +2028,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}/api"
-	"{{.pkg}}/{{.proj}}/service"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}/api"
+	"{{.pkg}}{{.proj}}/service"
+	"{{.pkg}}{{.proj}}_api"
 
 	"github.com/simplejia/clog/api"
 )
@@ -2053,17 +2045,17 @@ func ({{.lower}} *{{.camel}}) Upsert(w http.ResponseWriter, r *http.Request) {
 	var req *{{.proj}}_api.{{.camel}}UpsertReq
 	if err := json.Unmarshal({{.lower}}.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodePara)
+		{{.lower}}.ReplyFail(w, utils.CodePara)
 		return
 	}
 
-	trace := lib.GetTrace({{.lower}})
+	trace := utils.GetTrace({{.lower}})
 
 	{{.lower}}API := (*{{.proj}}_api.{{.camel}})(req)
 
 	if err := service.New{{.camel}}().WithTrace(trace).Upsert({{.lower}}API); err != nil {
 		clog.Error("%s {{.lower}}.Upsert err: %v, req: %v", fun, err, req)
-		{{.lower}}.ReplyFail(w, lib.CodeSrv)
+		{{.lower}}.ReplyFail(w, utils.CodeSrv)
 		return
 	}
 
@@ -2071,7 +2063,7 @@ func ({{.lower}} *{{.camel}}) Upsert(w http.ResponseWriter, r *http.Request) {
 	{{.lower}}.ReplyOk(w, resp)
 
 	// 进行一些异步处理的工作
-	go lib.Updates({{.lower}}API, lib.ADD, nil)
+	go utils.Updates({{.lower}}API, utils.ADD, nil)
 
 	return
 }
@@ -2081,27 +2073,27 @@ var tplTest = `package {{.snake}}
 
 import (
 	"encoding/json"
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 // Add 封装controller.Add操作
-func Add(req *{{.proj}}_api.{{.camel}}AddReq) (resp *{{.proj}}_api.{{.camel}}AddResp, result *lib.Resp, err error) {
+func Add(req *{{.proj}}_api.{{.camel}}AddReq) (resp *{{.proj}}_api.{{.camel}}AddResp, result *utils.Resp, err error) {
 	c := &{{.camel}}{}
-	body, err := lib.TestPost(c.Add, req)
+	body, err := utils.TestPost(c.Add, req)
 	if err != nil {
 		return
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.proj}}_api.{{.camel}}AddResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
 	if err != nil {
 		return
 	}
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -2112,22 +2104,22 @@ func Add(req *{{.proj}}_api.{{.camel}}AddReq) (resp *{{.proj}}_api.{{.camel}}Add
 }
 
 // Update 封装controller.Update操作
-func Update(req *{{.proj}}_api.{{.camel}}UpdateReq) (resp *{{.proj}}_api.{{.camel}}UpdateResp, result *lib.Resp, err error) {
+func Update(req *{{.proj}}_api.{{.camel}}UpdateReq) (resp *{{.proj}}_api.{{.camel}}UpdateResp, result *utils.Resp, err error) {
 	c := &{{.camel}}{}
-	body, err := lib.TestPost(c.Update, req)
+	body, err := utils.TestPost(c.Update, req)
 	if err != nil {
 		return
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.proj}}_api.{{.camel}}UpdateResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
 	if err != nil {
 		return
 	}
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -2138,22 +2130,22 @@ func Update(req *{{.proj}}_api.{{.camel}}UpdateReq) (resp *{{.proj}}_api.{{.came
 }
 
 // Del 封装controller.Del操作
-func Del(req *{{.proj}}_api.{{.camel}}DelReq) (resp *{{.proj}}_api.{{.camel}}DelResp, result *lib.Resp, err error) {
+func Del(req *{{.proj}}_api.{{.camel}}DelReq) (resp *{{.proj}}_api.{{.camel}}DelResp, result *utils.Resp, err error) {
 	c := &{{.camel}}{}
-	body, err := lib.TestPost(c.Del, req)
+	body, err := utils.TestPost(c.Del, req)
 	if err != nil {
 		return
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.proj}}_api.{{.camel}}DelResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
 	if err != nil {
 		return
 	}
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -2164,22 +2156,22 @@ func Del(req *{{.proj}}_api.{{.camel}}DelReq) (resp *{{.proj}}_api.{{.camel}}Del
 }
 
 // Get 封装controller.Get操作
-func Get(req *{{.proj}}_api.{{.camel}}GetReq) (resp *{{.proj}}_api.{{.camel}}GetResp, result *lib.Resp, err error) {
+func Get(req *{{.proj}}_api.{{.camel}}GetReq) (resp *{{.proj}}_api.{{.camel}}GetResp, result *utils.Resp, err error) {
 	c := &{{.camel}}{}
-	body, err := lib.TestPost(c.Get, req)
+	body, err := utils.TestPost(c.Get, req)
 	if err != nil {
 		return
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.proj}}_api.{{.camel}}GetResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
 	if err != nil {
 		return
 	}
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -2189,22 +2181,22 @@ func Get(req *{{.proj}}_api.{{.camel}}GetReq) (resp *{{.proj}}_api.{{.camel}}Get
 }
 
 // Gets 封装controller.Gets操作
-func Gets(req *{{.proj}}_api.{{.camel}}GetsReq) (resp *{{.proj}}_api.{{.camel}}GetsResp, result *lib.Resp, err error) {
+func Gets(req *{{.proj}}_api.{{.camel}}GetsReq) (resp *{{.proj}}_api.{{.camel}}GetsResp, result *utils.Resp, err error) {
 	c := &{{.camel}}{}
-	body, err := lib.TestPost(c.Gets, req)
+	body, err := utils.TestPost(c.Gets, req)
 	if err != nil {
 		return
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.proj}}_api.{{.camel}}GetsResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
 	if err != nil {
 		return
 	}
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -2214,22 +2206,22 @@ func Gets(req *{{.proj}}_api.{{.camel}}GetsReq) (resp *{{.proj}}_api.{{.camel}}G
 }
 
 // PageList 封装controller.PageList操作
-func PageList(req *{{.proj}}_api.{{.camel}}PageListReq) (resp *{{.proj}}_api.{{.camel}}PageListResp, result *lib.Resp, err error) {
+func PageList(req *{{.proj}}_api.{{.camel}}PageListReq) (resp *{{.proj}}_api.{{.camel}}PageListResp, result *utils.Resp, err error) {
 	c := &{{.camel}}{}
-	body, err := lib.TestPost(c.PageList, req)
+	body, err := utils.TestPost(c.PageList, req)
 	if err != nil {
 		return
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.proj}}_api.{{.camel}}PageListResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
 	if err != nil {
 		return
 	}
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -2239,22 +2231,22 @@ func PageList(req *{{.proj}}_api.{{.camel}}PageListReq) (resp *{{.proj}}_api.{{.
 }
 
 // FlowList 封装controller.FlowList操作
-func FlowList(req *{{.proj}}_api.{{.camel}}FlowListReq) (resp *{{.proj}}_api.{{.camel}}FlowListResp, result *lib.Resp, err error) {
+func FlowList(req *{{.proj}}_api.{{.camel}}FlowListReq) (resp *{{.proj}}_api.{{.camel}}FlowListResp, result *utils.Resp, err error) {
 	c := &{{.camel}}{}
-	body, err := lib.TestPost(c.FlowList, req)
+	body, err := utils.TestPost(c.FlowList, req)
 	if err != nil {
 		return
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.proj}}_api.{{.camel}}FlowListResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
 	if err != nil {
 		return
 	}
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -2264,22 +2256,22 @@ func FlowList(req *{{.proj}}_api.{{.camel}}FlowListReq) (resp *{{.proj}}_api.{{.
 }
 
 // Upsert 封装controller.Upsert操作
-func Upsert(req *{{.proj}}_api.{{.camel}}UpsertReq) (resp *{{.proj}}_api.{{.camel}}UpsertResp, result *lib.Resp, err error) {
+func Upsert(req *{{.proj}}_api.{{.camel}}UpsertReq) (resp *{{.proj}}_api.{{.camel}}UpsertResp, result *utils.Resp, err error) {
 	c := &{{.camel}}{}
-	body, err := lib.TestPost(c.Upsert, req)
+	body, err := utils.TestPost(c.Upsert, req)
 	if err != nil {
 		return
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.proj}}_api.{{.camel}}UpsertResp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
 	if err != nil {
 		return
 	}
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -2589,7 +2581,14 @@ func main() {
 	}
 	flag.Parse()
 
-	if rootPkg == "" || name == "" {
+	rootPkg = strings.TrimPrefix(rootPkg, "/")
+	if rootPkg != "" {
+		if !strings.HasSuffix(rootPkg, "/") {
+			rootPkg += "/"
+		}
+	}
+
+	if name == "" {
 		flag.Usage()
 		return
 	}
@@ -2651,7 +2650,7 @@ func main() {
 
 	for _, level := range []string{"model", "service"} {
 		file := filepath.Join(level, level+".go")
-		pkg := fmt.Sprintf("%s/%s/%s/%s", rootPkg, base, level, snake(name))
+		pkg := fmt.Sprintf("%s%s/%s/%s", rootPkg, base, level, snake(name))
 		if err := addImport(file, pkg); err != nil {
 			exit("add import fail, file: %s, err: %v, package: %s", file, err, pkg)
 		}

@@ -37,7 +37,6 @@ import (
 	"time"
 
 	"github.com/simplejia/utils"
-	"{{.pkg}}/lib"
 )
 
 // {{.camel_type}}{{.camel_method}}Req 定义输入
@@ -58,8 +57,8 @@ func ({{.lower_type}}{{.camel_method}}Req *{{.camel_type}}{{.camel_method}}Req) 
 type {{.camel_type}}{{.camel_method}}Resp struct {
 }
 
-func {{.camel_type}}{{.camel_method}}(name string, req *{{.camel_type}}{{.camel_method}}Req, trace *lib.Trace) (resp *{{.camel_type}}{{.camel_method}}Resp, result *lib.Resp, err error) {
-	addr, err := lib.NameWrap(name)
+func {{.camel_type}}{{.camel_method}}(name string, req *{{.camel_type}}{{.camel_method}}Req, trace *utils.Trace) (resp *{{.camel_type}}{{.camel_method}}Resp, result *utils.Resp, err error) {
+	addr, err := utils.NameWrap(name)
 	if err != nil {
 		return
 	}
@@ -85,7 +84,7 @@ func {{.camel_type}}{{.camel_method}}(name string, req *{{.camel_type}}{{.camel_
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.camel_type}}{{.camel_method}}Resp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
@@ -93,7 +92,7 @@ func {{.camel_type}}{{.camel_method}}(name string, req *{{.camel_type}}{{.camel_
 		return
 	}
 
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -105,11 +104,11 @@ func {{.camel_type}}{{.camel_method}}(name string, req *{{.camel_type}}{{.camel_
 
 var tplController = `package {{.snake_type}}
 
-import "{{.pkg}}/lib"
+import "github.com/simplejia/utils"
 
 // {{.camel_type}} 定义主对象
 type {{.camel_type}} struct {
-	lib.Base
+	utils.Base
 }
 `
 
@@ -120,8 +119,8 @@ import (
 	"net/http"
 
 	clog "github.com/simplejia/clog/api"
-	"{{.pkg}}/lib"
-	"{{.pkg}}/{{.proj}}_api"
+	"github.com/simplejia/utils"
+	"{{.pkg}}{{.proj}}_api"
 )
 
 // {{.camel_method}} just for demo
@@ -133,7 +132,7 @@ func ({{.lower_type}} *{{.camel_type}}) {{.camel_method}}(w http.ResponseWriter,
 	var req *{{.proj}}_api.{{.camel_type}}{{.camel_method}}Req
 	if err := json.Unmarshal({{.lower_type}}.ReadBody(r), &req); err != nil || !req.Regular() {
 		clog.Error("%s param err: %v, req: %v", fun, err, req)
-		{{.lower_type}}.ReplyFail(w, lib.CodePara)
+		{{.lower_type}}.ReplyFail(w, utils.CodePara)
 		return
 	}
 
@@ -145,22 +144,22 @@ func ({{.lower_type}} *{{.camel_type}}) {{.camel_method}}(w http.ResponseWriter,
 `
 
 var tplTestFunc = `// {{.camel_method}} 封装controller.{{.camel_method}}操作
-func {{.camel_method}}(req *{{.proj}}_api.{{.camel_type}}{{.camel_method}}Req) (resp *{{.proj}}_api.{{.camel_type}}{{.camel_method}}Resp, result *lib.Resp, err error) {
+func {{.camel_method}}(req *{{.proj}}_api.{{.camel_type}}{{.camel_method}}Req) (resp *{{.proj}}_api.{{.camel_type}}{{.camel_method}}Resp, result *utils.Resp, err error) {
 	c := &{{.camel_type}}{}
-	body, err := lib.TestPost(c.{{.camel_method}}, req)
+	body, err := utils.TestPost(c.{{.camel_method}}, req)
 	if err != nil {
 		return
 	}
 
 	s := &struct {
-		lib.Resp
+		utils.Resp
 		Data *{{.proj}}_api.{{.camel_type}}{{.camel_method}}Resp` + " `" + `json:"data"` + "`" + `
 	}{}
 	err = json.Unmarshal(body, s)
 	if err != nil {
 		return
 	}
-	if s.Ret != lib.CodeOk {
+	if s.Ret != utils.CodeOk {
 		result = &s.Resp
 		return
 	}
@@ -424,6 +423,13 @@ func main() {
 	}
 	flag.Parse()
 
+	rootPkg = strings.TrimPrefix(rootPkg, "/")
+	if rootPkg != "" {
+		if !strings.HasSuffix(rootPkg, "/") {
+			rootPkg += "/"
+		}
+	}
+
 	if path == "" {
 		flag.Usage()
 		return
@@ -481,9 +487,8 @@ func main() {
 
 	for _, pkg := range []string{
 		"encoding/json",
-		fmt.Sprintf("%s/lib", rootPkg),
-		fmt.Sprintf("%s/%s/test", rootPkg, base),
-		fmt.Sprintf("%s/%s_api", rootPkg, base),
+		"github.com/simplejia/utils",
+		fmt.Sprintf("%s%s_api", rootPkg, base),
 	} {
 		if err := addImport(file, pkg); err != nil {
 			exit("add file: %s, err: %v, package: %s", file, err, pkg)

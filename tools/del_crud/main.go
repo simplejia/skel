@@ -171,6 +171,13 @@ func main() {
 	}
 	flag.Parse()
 
+	rootPkg = strings.TrimPrefix(rootPkg, "/")
+	if rootPkg != "" {
+		if !strings.HasSuffix(rootPkg, "/") {
+			rootPkg += "/"
+		}
+	}
+
 	if name == "" {
 		flag.Usage()
 		return
@@ -213,7 +220,7 @@ func main() {
 
 	for _, level := range []string{"model", "service"} {
 		file := filepath.Join(level, level+".go")
-		pkg := fmt.Sprintf("%s/%s/%s/%s", rootPkg, base, level, snake(name))
+		pkg := fmt.Sprintf("%s%s/%s/%s", rootPkg, base, level, snake(name))
 		if err := delImport(file, pkg); err != nil {
 			exit("del import fail, file: %s, err: %v, package: %s", file, err, pkg)
 		}

@@ -6,12 +6,12 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/simplejia/lib"
+	"github.com/simplejia/utils"
 )
 
 // Timeout 前置过滤器，用于接口超时控制
 func Timeout(w http.ResponseWriter, r *http.Request, m map[string]interface{}) (ok bool) {
-	c := m["__C__"].(lib.IBase)
+	c := m["__C__"].(utils.IBase)
 
 	durStr, _ := m["dur"].(string)
 	if durStr == "" {
@@ -27,16 +27,16 @@ func Timeout(w http.ResponseWriter, r *http.Request, m map[string]interface{}) (
 		return true
 	}
 
-	c.SetParam(lib.KeyTimeout, nil)
+	c.SetParam(utils.KeyTimeout, nil)
 
 	i := new(int32)
-	c.SetParam(lib.KeyTimeoutMutex, i)
+	c.SetParam(utils.KeyTimeoutMutex, i)
 
 	j := new(int32)
-	c.SetParam(lib.KeyTimeoutOccur, j)
+	c.SetParam(utils.KeyTimeoutOccur, j)
 
 	done := make(chan struct{})
-	c.SetParam(lib.KeyTimeoutDone, done)
+	c.SetParam(utils.KeyTimeoutDone, done)
 
 	go func() {
 		timer := time.NewTimer(dur)
@@ -53,7 +53,7 @@ func Timeout(w http.ResponseWriter, r *http.Request, m map[string]interface{}) (
 			w.WriteHeader(http.StatusServiceUnavailable)
 			io.WriteString(w, "Timeout error")
 
-			if ctxDone, ok := r.Context().Value(lib.CtxDone).(chan struct{}); ok {
+			if ctxDone, ok := r.Context().Value(utils.CtxDone).(chan struct{}); ok {
 				close(ctxDone)
 			}
 		case <-done:
