@@ -6,9 +6,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/simplejia/utils"
-
 	"github.com/simplejia/clog/api"
+	"github.com/simplejia/utils"
 )
 
 // Boss 后置过滤器，用于数据上报，比如调用延时，出错等
@@ -26,7 +25,7 @@ func Boss(w http.ResponseWriter, r *http.Request, m map[string]interface{}) bool
 	}
 
 	if err != nil {
-		clog.Error("Boss() path: %v, body: %s, err: %v, stack: %s, timeout: %v, trace: %v, elapse: %s", path, c.ReadBody(r), err, debug.Stack(), timeout, trace, time.Since(bt))
+		clog.Error("Boss() path: %v, body: %s, elapse: %s, timeout: %v, trace: %v, err: %v, stack: %s", path, c.ReadBody(r), time.Since(bt), timeout, trace, err, debug.Stack())
 
 		if _, ok := c.GetParam(utils.KeyTimeout); ok {
 			muI, _ := c.GetParam(utils.KeyTimeoutMutex)
@@ -49,7 +48,7 @@ func Boss(w http.ResponseWriter, r *http.Request, m map[string]interface{}) bool
 	if !ok {
 		resp = []byte(nil)
 	}
-	clog.Info("Boss() path: %v, body: %s, resp: %s, timeout: %v, trace: %v, elapse: %s", path, c.ReadBody(r), resp.([]byte), timeout, trace, time.Since(bt))
+	clog.Info("Boss() path: %v, body: %s, elapse: %s, timeout: %v, trace: %v, resp: %s", path, c.ReadBody(r), time.Since(bt), timeout, trace, resp.([]byte))
 
 	return true
 }

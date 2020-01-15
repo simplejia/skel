@@ -19,11 +19,11 @@ func (skel *Skel) PageList(offset, limit int) (skelsAPI []*skel_api.Skel, err er
 }
 
 // FlowList 定义list操作
-func (skel *Skel) FlowList(id int64, limit int) (skelsAPI []*skel_api.Skel, err error) {
+func (skel *Skel) FlowList(lastID string, limit int) (skelsAPI []*skel_api.Skel, err error) {
 	fun := "service.skel.Skel.FlowList"
 	defer utils.TraceMe(skel.Trace, fun)()
 
-	if skelsAPI, err = model.NewSkel().WithTrace(skel.Trace).FlowList(id, limit); err != nil {
+	if skelsAPI, err = model.NewSkel().WithTrace(skel.Trace).FlowList(lastID, limit); err != nil {
 		return
 	}
 

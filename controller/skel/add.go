@@ -33,7 +33,7 @@ func (skel *Skel) Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := &skel_api.SkelAddResp{}
+	resp := (*skel_api.SkelAddResp)(skelAPI)
 	skel.ReplyOk(w, resp)
 
 	// 进行一些异步处理的工作

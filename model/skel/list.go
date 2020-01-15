@@ -24,7 +24,7 @@ func (skel *Skel) PageList(offset, limit int) (skelsAPI []*skel_api.Skel, err er
 }
 
 // FlowList 定义flow_list操作
-func (skel *Skel) FlowList(id int64, limit int) (skelsAPI []*skel_api.Skel, err error) {
+func (skel *Skel) FlowList(lastID string, limit int) (skelsAPI []*skel_api.Skel, err error) {
 	fun := "model.skel.Skel.FlowList"
 	defer utils.TraceMe(skel.Trace, fun)()
 
@@ -32,11 +32,6 @@ func (skel *Skel) FlowList(id int64, limit int) (skelsAPI []*skel_api.Skel, err 
 	defer c.Database.Session.Close()
 
 	q := bson.M{}
-	if id != *new(int64) {
-		q["_id"] = bson.M{
-			"$lt": id,
-		}
-	}
 	err = c.Find(q).Sort("-_id").Limit(limit).All(&skelsAPI)
 	if err != nil {
 		return

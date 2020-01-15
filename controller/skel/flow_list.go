@@ -28,7 +28,7 @@ func (skel *Skel) FlowList(w http.ResponseWriter, r *http.Request) {
 
 	limitMore := req.Limit + 1
 
-	skelsAPI, err := service.NewSkel().WithTrace(trace).FlowList(*new(int64), limitMore)
+	skelsAPI, err := service.NewSkel().WithTrace(trace).FlowList(req.LastID, limitMore)
 	if err != nil {
 		clog.Error("%s skel.FlowList err: %v, req: %v", fun, err, req)
 		skel.ReplyFail(w, utils.CodeSrv)

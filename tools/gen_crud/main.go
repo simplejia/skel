@@ -452,7 +452,7 @@ import (
 
 // {{.camel}}PageListReq 定义输入
 type {{.camel}}PageListReq struct {
-	{{- if gt (len (split_keys .keys)) 1}}
+	{{- if gt (len (split_keys .keys)) 0}}
 	{{- with (split_keys .keys)}}
 	{{camel (index . 0 0)}} {{index . 0 1}}` + " `" + `json:"{{snake (index . 0 0)}}"` + "`" + `
 	{{- end}}
@@ -541,7 +541,7 @@ import (
 
 // {{.camel}}FlowListReq 定义输入
 type {{.camel}}FlowListReq struct {
-	{{- if gt (len (split_keys .keys)) 1}}
+	{{- if gt (len (split_keys .keys)) 0}}
 	{{- with (split_keys .keys)}}
 	{{camel (index . 0 0)}} {{index . 0 1}}` + " `" + `json:"{{snake (index . 0 0)}}"` + "`" + `
 	{{- end}}
@@ -733,7 +733,7 @@ func ({{.lower}} *{{.camel}}) WithTrace(trace *utils.Trace) *{{.camel}} {
 {{- $id_type := .id_type}}
 
 {{- define "id"}}
-{{- if gt (len (split_keys .)) 1}}
+{{- if gt (len (split_keys .)) 0}}
 {{- with (split_keys .)}}
 {{- lower (index . 0 0)}}
 {{- end}}
@@ -743,7 +743,7 @@ id
 {{- end}}
 
 {{- define "id_type"}}
-{{- if gt (len (split_keys .keys)) 1}}
+{{- if gt (len (split_keys .keys)) 0}}
 {{- with (split_keys .keys)}}
 {{- index . 0 1}}
 {{- end}}
@@ -755,7 +755,7 @@ id
 // Db 返回db name
 func ({{.lower}} *{{.camel}}) Db({{if .need_multi_table}}{{template "id" .keys}} {{template "id_type" dict "keys" .keys "id_type" .id_type}}{{end}}) (db string) {
 	{{- if .need_multi_table}}
-	{{- if gt (len (split_keys .keys)) 1}}
+	{{- if gt (len (split_keys .keys)) 0}}
 	{{- with (split_keys .keys)}}
 	return fmt.Sprintf("{{dbprefix $proj $snake}}_%d", {{if eq (index . 0 1) "string"}}utils.Hash33({{lower (index . 0 0)}}){{else}}int({{lower (index . 0 0)}}){{end}}%TableNum%DbNum)
 	{{- end}}
@@ -770,7 +770,7 @@ func ({{.lower}} *{{.camel}}) Db({{if .need_multi_table}}{{template "id" .keys}}
 // Table 返回table name
 func ({{.lower}} *{{.camel}}) Table({{if .need_multi_table}}{{template "id" .keys}} {{template "id_type" dict "keys" .keys "id_type" .id_type}}{{end}}) (table string) {
 	{{- if .need_multi_table}}
-	{{- if gt (len (split_keys .keys)) 1}}
+	{{- if gt (len (split_keys .keys)) 0}}
 	{{- with (split_keys .keys)}}
 	return fmt.Sprintf("{{$snake}}_%d", {{if eq (index . 0 1) "string"}}utils.Hash33({{lower (index . 0 0)}}) {{else}}int({{lower (index . 0 0)}}){{end}}%TableNum)
 	{{- end}}
@@ -1061,44 +1061,24 @@ import (
 	"{{.pkg}}{{.proj}}_api"
 )
 
-{{- define "id_and_id_type_page"}}
-{{- if gt (len (split_keys .)) 1}}
+{{- define "id_and_id_type"}}
+{{- if gt (len (split_keys .)) 0}}
 {{- with (split_keys .)}}{{lower (index . 0 0)}} {{index . 0 1}}, {{end}}
 {{- end}}
 {{- end}}
 
-{{- define "id_page"}}
-{{- if gt (len (split_keys .)) 1}}
+{{- define "id"}}
+{{- if gt (len (split_keys .)) 0}}
 {{- with (split_keys .)}}{{lower (index . 0 0)}}, {{end}}
 {{- end}}
 {{- end}}
 
-{{- define "id_flow"}}
-{{- if gt (len (split_keys .keys)) 1}}
-{{- with (split_keys .keys)}}
-{{- lower (index . 0 0)}}, {{lower (index . 1 0)}}
-{{- end}}
-{{- else -}}
-id
-{{- end}}
-{{- end}}
-
-{{define "id_and_id_type_flow"}}
-{{- if gt (len (split_keys .keys)) 1}}
-{{- with (split_keys .keys)}}
-{{- lower (index . 0 0)}} {{index . 0 1}}, {{lower (index . 1 0)}} {{index . 1 1}}
-{{- end}}
-{{- else -}}
-id {{.id_type}}
-{{- end}}
-{{- end}}
-
 // PageList 定义page_list操作
-func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type_page" .keys}}offset, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
+func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type" .keys}}offset, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "service.{{.snake}}.{{.camel}}.PageList"
 	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
-	if {{.lower}}sAPI, err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).PageList({{template "id_page" .keys}}offset, limit); err != nil {
+	if {{.lower}}sAPI, err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).PageList({{template "id" .keys}}offset, limit); err != nil {
 		return
 	}
 
@@ -1106,11 +1086,11 @@ func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type_page" .keys}}o
 }
 
 // FlowList 定义list操作
-func ({{.lower}} *{{.camel}}) FlowList({{template "id_and_id_type_flow" dict "keys" .keys "id_type" .id_type}}, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
+func ({{.lower}} *{{.camel}}) FlowList({{template "id_and_id_type" .keys}}lastID string, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "service.{{.snake}}.{{.camel}}.FlowList"
 	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
-	if {{.lower}}sAPI, err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).FlowList({{template "id_flow" dict "keys" .keys "id_type" .id_type}}, limit); err != nil {
+	if {{.lower}}sAPI, err = model.New{{.camel}}().WithTrace({{.lower}}.Trace).FlowList({{template "id" .keys}}lastID, limit); err != nil {
 		return
 	}
 
@@ -1124,8 +1104,6 @@ import (
 	"github.com/simplejia/utils"
 	"{{.pkg}}{{.proj}}_api"
 )
-
-{{- $lower := .lower}}
 
 {{- define "id_and_id_type_map"}}
 {{- if gt (len (split_keys .keys)) 1}}
@@ -1162,11 +1140,15 @@ id
 {{- end}}
 {{- end}}
 
+{{- $lower := .lower}}
+
 // Get 定义获取操作
 func ({{.lower}} *{{.camel}}) Get({{template "id_and_id_type" dict "keys" .keys "id_type" .id_type}}) ({{.lower}}API *{{.proj}}_api.{{.camel}}, err error) {
 	fun := "model.{{.snake}}.{{.camel}}.Get"
 	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
+	{{if and .need_multi_table (eq (len (split_keys .keys)) 1)}}
+	{{else}}
 	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id" .keys}}{{end}})
 	defer c.Database.Session.Close()
 
@@ -1189,6 +1171,7 @@ func ({{.lower}} *{{.camel}}) Get({{template "id_and_id_type" dict "keys" .keys 
 		err = nil
 		return
 	}
+	{{end}}
 
 	return
 }
@@ -1216,7 +1199,7 @@ func ({{.lower}} *{{.camel}}) Gets({{template "id_and_id_type_map" dict "keys" .
 	if err != nil {
 		return
 	}
-	{{- else}}
+	{{- else if eq (len (split_keys .keys)) 0}}
 	{{template "id" .keys}}sGroup := {{.lower}}.Groups(ids)
 
 	for _, {{template "id" .keys}}s := range {{template "id" .keys}}sGroup {
@@ -1278,7 +1261,7 @@ import (
 )
 
 {{- define "id"}}
-{{- if gt (len (split_keys .)) 1}}
+{{- if gt (len (split_keys .)) 0}}
 {{- with (split_keys .)}}
 {{- camel (index . 0 0)}}
 {{- end}}
@@ -1341,6 +1324,8 @@ func ({{.lower}} *{{.camel}}) Del({{template "id_and_id_type" dict "keys" .keys 
 	fun := "model.{{.snake}}.{{.camel}}.Del"
 	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
+	{{if and .need_multi_table (eq (len (split_keys .keys)) 1)}}
+	{{else}}
 	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id" .keys}}{{end}})
 	defer c.Database.Session.Close()
 
@@ -1359,6 +1344,7 @@ func ({{.lower}} *{{.camel}}) Del({{template "id_and_id_type" dict "keys" .keys 
 	if err != nil {
 		return
 	}
+	{{end}}
 
 	return
 }
@@ -1374,27 +1360,12 @@ import (
 {{- $lower := .lower}}
 
 {{- define "id"}}
-{{- if gt (len (split_keys .)) 1}}
+{{- if gt (len (split_keys .)) 0}}
 {{- with (split_keys .)}}
 {{- camel (index . 0 0)}}
 {{- end}}
 {{- else -}}
 ID
-{{- end}}
-{{- end}}
-
-{{- define "id_and_id_type"}}
-{{- if gt (len (split_keys .keys)) 1}}
-{{- with (split_keys .keys)}}
-{{- range $pos, $elem := .}} 
-{{- if ne $pos 0 -}}
-,
-{{- end}}
-{{- lower (index $elem 0)}} {{index $elem 1}}
-{{- end}}
-{{- end}}
-{{- else -}}
-id {{.id_type}}
 {{- end}}
 {{- end}}
 
@@ -1462,14 +1433,14 @@ import (
 
 {{- $id_type := .id_type}}
 
-{{- define "id_and_id_type_page"}}
-{{- if gt (len (split_keys .)) 1}}
+{{- define "id_and_id_type"}}
+{{- if gt (len (split_keys .)) 0}}
 {{- with (split_keys .)}}{{lower (index . 0 0)}} {{index . 0 1}}, {{end}}
 {{- end}}
 {{- end}}
 
-{{- define "id_page"}}
-{{- if gt (len (split_keys .keys)) 1}}
+{{- define "id"}}
+{{- if gt (len (split_keys .keys)) 0}}
 {{- with (split_keys .keys)}}
 {{- lower (index . 0 0)}}
 {{- end}}
@@ -1478,26 +1449,6 @@ import (
 {{- end}}
 {{- end}}
 
-
-{{- define "id_flow"}}
-{{- if gt (len (split_keys .)) 1}}
-{{- with (split_keys .)}}
-{{- lower (index . 0 0)}}
-{{- end}}
-{{- else -}}
-id
-{{- end}}
-{{- end}}
-
-{{- define "id_and_id_type_flow"}}
-{{- if gt (len (split_keys .keys)) 1}}
-{{- with (split_keys .keys)}}
-{{- lower (index . 0 0)}} {{index . 0 1}}, {{lower (index . 1 0)}} {{index . 1 1}}
-{{- end}}
-{{- else -}}
-id {{.id_type}}
-{{- end}}
-{{- end}}
 
 {{- define "id_sort"}}
 {{- if gt (len (split_keys .)) 1}}
@@ -1510,16 +1461,16 @@ _id
 {{- end}}
 
 // PageList 定义page_list操作
-func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type_page" .keys}}offset, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
+func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type" .keys}}offset, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "model.{{.snake}}.{{.camel}}.PageList"
 	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
-	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id_page" dict "keys" .keys "id_type" .id_type}}{{end}})
+	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id" dict "keys" .keys "id_type" .id_type}}{{end}})
 	defer c.Database.Session.Close()
 
 	q := bson.M{}
 
-	{{- if gt (len (split_keys .keys)) 1}}
+	{{- if gt (len (split_keys .keys)) 0}}
 	{{- with (split_keys .keys)}}
 	q["{{snake (index . 0 0)}}"] = {{lower (index . 0 0)}}
 	{{- end}}
@@ -1533,30 +1484,19 @@ func ({{.lower}} *{{.camel}}) PageList({{template "id_and_id_type_page" .keys}}o
 }
 
 // FlowList 定义flow_list操作
-func ({{.lower}} *{{.camel}}) FlowList({{template "id_and_id_type_flow" dict "keys" .keys "id_type" .id_type}}, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
+func ({{.lower}} *{{.camel}}) FlowList({{template "id_and_id_type" .keys}}lastID string, limit int) ({{.lower}}sAPI []*{{.proj}}_api.{{.camel}}, err error) {
 	fun := "model.{{.snake}}.{{.camel}}.FlowList"
 	defer utils.TraceMe({{.lower}}.Trace, fun)()
 
-	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id_flow" .keys}}{{end}})
+	c := {{.lower}}.GetC({{if .need_multi_table}}{{template "id" dict "keys" .keys "id_type" .id_type}}{{end}})
 	defer c.Database.Session.Close()
 
 	q := bson.M{}
 
-	{{- if gt (len (split_keys .keys)) 1}}
+	{{- if gt (len (split_keys .keys)) 0}}
 	{{- with (split_keys .keys)}}
 	q["{{snake (index . 0 0)}}"] = {{lower (index . 0 0)}}
-	if {{lower (index . 1 0)}} != *new({{lower (index . 1 1)}}) {
-		q["{{snake (index . 1 0)}}"] = bson.M{
-			"$lt": {{lower (index . 1 0)}},
-		}
-	}
 	{{- end}}
-	{{- else}}
-	if id != *new({{.id_type}}) {
-		q["_id"] = bson.M{
-			"$lt": id,
-		}
-	}
 	{{- end}}
 	err = c.Find(q).Sort("-{{template "id_sort" .keys}}").Limit(limit).All(&{{.lower}}sAPI)
 	if err != nil {
@@ -1706,21 +1646,6 @@ import (
 	"github.com/simplejia/clog/api"
 )
 
-{{- define "id"}}
-{{- if gt (len (split_keys .)) 1}}
-{{- with (split_keys .)}}
-{{- range $pos, $elem := .}} 
-{{- if ne $pos 0 -}}
-,
-{{- end -}}
-req.{{camel (index $elem 0)}}
-{{- end}}
-{{- end}}
-{{- else -}}
-req.ID
-{{- end}}
-{{- end}}
-
 // Add just for skel
 // @prefilter({"Timeout":{"dur":"1s"}}, "Trace")
 // @postfilter("Boss")
@@ -1743,7 +1668,7 @@ func ({{.lower}} *{{.camel}}) Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := &{{.proj}}_api.{{.camel}}AddResp{}
+	resp := (*{{.proj}}_api.{{.camel}}AddResp)({{.lower}}API)
 	{{.lower}}.ReplyOk(w, resp)
 
 	// 进行一些异步处理的工作
@@ -1877,7 +1802,7 @@ func ({{.lower}} *{{.camel}}) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := &{{.proj}}_api.{{.camel}}UpdateResp{}
+	resp := (*{{.proj}}_api.{{.camel}}UpdateResp)({{.lower}}API)
 	{{.lower}}.ReplyOk(w, resp)
 
 	// 进行一些异步处理的工作
@@ -1901,7 +1826,7 @@ import (
 )
 
 {{- define "id"}}
-{{- if gt (len (split_keys .)) 1}}
+{{- if gt (len (split_keys .)) 0}}
 {{- with (split_keys .)}}req.{{camel (index . 0 0)}}, {{end}}
 {{- end}}
 {{- end}}
@@ -1967,12 +1892,8 @@ import (
 )
 
 {{- define "id"}}
-{{- if gt (len (split_keys .keys)) 1}}
-{{- with (split_keys .keys) -}}
-req.{{camel (index . 0 0)}}, *new({{lower (index . 1 1)}})
-{{- end}}
-{{- else -}}
-*new({{.id_type}})
+{{- if gt (len (split_keys .)) 0}}
+{{- with (split_keys .)}}req.{{camel (index . 0 0)}}, {{end}}
 {{- end}}
 {{- end}}
 
@@ -1993,7 +1914,7 @@ func ({{.lower}} *{{.camel}}) FlowList(w http.ResponseWriter, r *http.Request) {
 
 	limitMore := req.Limit + 1
 
-	{{.lower}}sAPI, err := service.New{{.camel}}().WithTrace(trace).FlowList({{template "id" dict "keys" .keys "id_type" .id_type}}, limitMore)
+	{{.lower}}sAPI, err := service.New{{.camel}}().WithTrace(trace).FlowList({{template "id" .keys}}req.LastID, limitMore)
 	if err != nil {
 		clog.Error("%s {{.lower}}.FlowList err: %v, req: %v", fun, err, req)
 		{{.lower}}.ReplyFail(w, utils.CodeSrv)
@@ -2059,7 +1980,7 @@ func ({{.lower}} *{{.camel}}) Upsert(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := &{{.proj}}_api.{{.camel}}UpsertResp{}
+	resp := (*{{.proj}}_api.{{.camel}}UpsertResp)({{.lower}}API)
 	{{.lower}}.ReplyOk(w, resp)
 
 	// 进行一些异步处理的工作

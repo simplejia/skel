@@ -34,7 +34,7 @@ func (skel *Skel) Upsert(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := &skel_api.SkelUpsertResp{}
+	resp := (*skel_api.SkelUpsertResp)(skelAPI)
 	skel.ReplyOk(w, resp)
 
 	// 进行一些异步处理的工作
